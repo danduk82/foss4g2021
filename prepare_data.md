@@ -19,10 +19,10 @@ baremaps execute \
 (this takes ~30 minutes)
 
 ```bash
-baremaps import \
-  --database 'jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps' \
-  --file 'https://download.geofabrik.de/europe/switzerland-latest.osm.pbf' \
-  --enable-http
+# baremaps import \
+#   --database 'jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps' \
+#   --file 'https://download.geofabrik.de/europe/switzerland-latest.osm.pbf' \
+#   --enable-http
 ```
 
 ```bash
@@ -32,6 +32,14 @@ baremaps import \
   --enable-http
 ```
 
+## materialized views for OSM
+
+the files are run in the input order
+
+```bash
+baremaps execute --database 'jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps' --file 'osm/queries/osm_create_views.sql' --file 'osm/queries/osm_create_gist_indexes.sql'
+```
+
 ## check data and style
 
 ```bash
@@ -39,14 +47,6 @@ baremaps edit --log-level DEBUG \
   --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&password=baremaps' \
   --tileset osm/tileset-osmvecto.json \
   --style osm/style-osmvecto.json
-```
-
-## materialized views for OSM
-
-the files are run in the input order
-
-```bash
-baremaps execute --database 'jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps' --file 'queries/osm_create_views.sql' --file 'queries/osm_create_gist_indexes.sql'
 ```
 
 ## create a custom dataset
