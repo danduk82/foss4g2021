@@ -19,15 +19,21 @@ unzip baremaps.zip && rm baremaps.zip
 export PATH=$PATH:`pwd`/baremaps/bin
 ```
 
-## select java version and use openjdk-11
+## Select java version and use openjdk-11
 
 ```bash
+sudo apt install openjdk-11-jre
 sudo update-alternatives --config java
-sudo update-alternatives --config javac
-sudo update-alternatives --config jar
 ```
 
-## create DB
+## Create DB
+
+We will now launch a docker container to host our testing database,
+and configure our environment to use it.
+
+### Launch a postgresql server with docker
+
+The following comand will start a postgresql database, and bind the TCP port 5432 of the host machine.
 
 ```bash
 docker run \
@@ -38,3 +44,22 @@ docker run \
   -e POSTGRES_PASSWORD=baremaps \
   -d baremaps/postgis:latest
 ```
+
+You can now access the database with `psql -U baremaps -h localhost baremaps` and the password `baremaps`
+
+NB: if you already have another service running on `localhost:5432` you should adapt the above command with `--publish <some-other-port>:5432` where `<some-other-port>` is another port that you want to use on the host machine.
+
+### (optional) create a postgresql-client service file
+
+You can create a file called `~/.pg_service.conf` with the following contents to access the DB more easily with `psql`:
+
+```conf
+[baremaps]
+host=localhost
+dbname=baremaps
+user=baremaps
+password=baremaps
+port=5432
+```
+
+Then you can just type `psql -d "service=baremaps"` to access the DB.
