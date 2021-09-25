@@ -27,5 +27,8 @@
     }
   } ],
   "center" : [ 9.5554, 47.166 ],
+  "metadata" : {
+    "maputnik:renderer" : "mbgljs"
+  },
   "zoom" : 14
 }

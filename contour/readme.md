@@ -110,7 +110,7 @@ a stronger line every 500m.
         {
           "minzoom": 0,
           "maxzoom": 20,
-          "sql": "SELECT ogc_fid, hstore('elevation' elevation::text) as tags, wkb_geometry FROM aster_dem WHERE MOD(elevation, 500) = 0"
+          "sql": "SELECT ogc_fid, hstore('elevation', elevation::text) as tags, wkb_geometry FROM aster_dem WHERE elevation::int % 500 = 0"
         }
       ]
     }
