@@ -1,0 +1,47 @@
+{
+  "version" : 8,
+  "sources" : {
+    "baremaps" : {
+      "type" : "vector",
+      "url" : "http://localhost:9000/tiles.json"
+    }
+  },
+  "layers" : [ {
+    "id" : "background",
+    "type" : "background",
+    "layout" : {
+      "visibility" : "visible"
+    },
+    "paint" : {
+      "background-color" : "rgba(0, 0, 0, 1)"
+    }
+  }, {
+    "id" : "highway",
+    "type" : "line",
+    "source" : "baremaps",
+    "source-layer" : "highway",
+    "paint" : {
+      "line-color" : "rgba(50, 50, 50, 1)",
+      "line-width" : 2
+    }
+  }, {
+    "id" : "building",
+    "type" : "fill-extrusion",
+    "source" : "baremaps",
+    "source-layer" : "building",
+    "layout" : {
+      "visibility" : "visible"
+    },
+    "paint" : {
+      "fill-extrusion-color" : "rgba(100, 100, 100, 1)",
+      "fill-extrusion-height" : [ "get", "building:height" ],
+      "fill-extrusion-base" : 0,
+      "fill-extrusion-opacity" : 1
+    }
+  } ],
+  "center" : [ 0.1278, 51.5074 ],
+  "metadata" : {
+    "maputnik:renderer" : "mbgljs"
+  },
+  "zoom" : 14
+}
