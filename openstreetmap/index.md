@@ -15,7 +15,7 @@ Also, if you are in a hurry, consider skipping the "Under the Hood" sections.
 
 OpenStreetMap (OSM) is a free and editable map of the world.
 It is maintained by a community of passionate volunteers in a way which is similar to Wikipedia.
-Every week, OpenStreetMap publishes a [full dump](https://planet.openstreetmap.org/) of its data in two flavours: a large XML file of about 90GB and a more compact binary file of about 50GB in the  [Protocol Buffer Format](https://developers.google.com/protocol-buffers) (PBF).
+Every week, OpenStreetMap publishes a [full dump](https://planet.openstreetmap.org/) of its data in two flavours: a large XML file of about 90GB and a more compact binary file of about 50GB in the [Protocol Buffer Format](https://developers.google.com/protocol-buffers) (PBF).
 As processing such large files can take several hours, [Geofabrik](http://www.geofabrik.de/data/download.html) regularly publishes smaller extracts of OSM for specific regions.
 In this example we will use a tiny extract of OSM for [Liechtenstein](https://en.wikipedia.org/wiki/Liechtenstein), which is suitable for fast experiments.
 
@@ -77,10 +77,10 @@ The following Figure displays the schema of the Postgis database created by Bare
 
 In order to create vector tiles, Baremaps uses JSON configuration files.
 You can obtain a copy of the [tileset.json](https://raw.githubusercontent.com/baremaps/baremaps/main/docs/examples/openstreetmap/tileset.json) and [style.json](https://raw.githubusercontent.com/baremaps/baremaps/main/docs/examples/openstreetmap/style.json) file in the repository.
-The [tileset.json](https://raw.githubusercontent.com/baremaps/baremaps/main/docs/examples/openstreetmap/tileset.json) is loosely based on the [TileJSON](https://github.com/mapbox/tilejson-spec) specification. 
+The [tileset.json](https://raw.githubusercontent.com/baremaps/baremaps/main/docs/examples/openstreetmap/tileset.json) is loosely based on the [TileJSON](https://github.com/mapbox/tilejson-spec) specification.
 It defines general tileset properties and lists layers containing SQL queries to be executed by Postgis.
 The [style.json](https://raw.githubusercontent.com/baremaps/baremaps/main/docs/examples/openstreetmap/style.json) file is a [Maplibre Style](https://maplibre.org/maplibre-gl-js-docs/api/).
-It defines general style and rendering properties. 
+It defines general style and rendering properties.
 
 Let's preview and edit the map with the sample configuration files by executing the following command in a terminal.
 
@@ -123,6 +123,25 @@ However, in the following excerpt of the json configuration file, none of these 
 }
 ```
 
+## use openstreetmap-vecto
+
+this folder also contains the tileset and style from the project baremaps/openstreetmap-vecto. If you want to see an extensive example that uses openstreetmap data, you must first create a few optimized views:
+
+```bash
+baremaps execute \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps' \
+  --file 'sql/osm_create_views.sql'
+```
+
+Then you can run baremaps using the example styles and tilesets:
+
+```bash
+baremaps edit --log-level DEBUG \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&password=baremaps' \
+  --tileset 'tileset-openstreetmap-vecto.json' \
+  --style 'style-openstreetmap-vecto.json'
+```
+
 Why don't we see these function calls in the configuration?
 Baremaps wants you to focus on the content of the tiles, and relieves you from the burden of writing complex SQL queries.
 In fact, at runtime, Baremaps merges all the queries of the configuration file into a single optimized query that produces vector tiles.
@@ -144,7 +163,6 @@ baremaps export \
 Notice that Baremaps has the ability to publish tiles directly on AWS.
 To do so, install the [AWS Command Line Interface](https://aws.amazon.com/cli/) on your computer and run the `aws configure` command in the terminal.
 Then, add the `--enable-aws` flag to the previous command and replace the `tiles/` directory with an S3 URL, Baremaps will take care of the rest.
-
 
 ## Conclusion
 
