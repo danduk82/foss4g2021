@@ -98,6 +98,25 @@ Notice that the changes in the configuration files are automatically reloaded by
 
 ![Maputnik editor](screenshot.png)
 
+## use openstreetmap-vecto
+
+this folder also contains the tileset and style from the project baremaps/openstreetmap-vecto. If you want to see an extensive example that uses openstreetmap data, you must first create a few optimized views:
+
+```bash
+baremaps execute \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps' \
+  --file 'sql/osm_create_views.sql'
+```
+
+Then you can run baremaps using the example styles and tilesets:
+
+```bash
+baremaps edit --log-level DEBUG \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&password=baremaps' \
+  --tileset 'tileset-openstreetmap-vecto.json' \
+  --style 'style-openstreetmap-vecto.json'
+```
+
 ### Under the Hood (Optional)
 
 Baremaps extensively rely on the fantastic [ST_AsMVT](https://postgis.net/docs/ST_AsMVT.html) functions released by the Postgis team to produce [Mapbox Vector Tiles](https://docs.mapbox.com/vector-tiles/specification/).
@@ -121,25 +140,6 @@ However, in the following excerpt of the json configuration file, none of these 
   ],
   ...
 }
-```
-
-## use openstreetmap-vecto
-
-this folder also contains the tileset and style from the project baremaps/openstreetmap-vecto. If you want to see an extensive example that uses openstreetmap data, you must first create a few optimized views:
-
-```bash
-baremaps execute \
-  --database 'jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps' \
-  --file 'sql/osm_create_views.sql'
-```
-
-Then you can run baremaps using the example styles and tilesets:
-
-```bash
-baremaps edit --log-level DEBUG \
-  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&password=baremaps' \
-  --tileset 'tileset-openstreetmap-vecto.json' \
-  --style 'style-openstreetmap-vecto.json'
 ```
 
 Why don't we see these function calls in the configuration?
