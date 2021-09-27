@@ -14,7 +14,7 @@ these examples have been tested on Ubuntu linux 18.04. You also need at least:
 #wget https://github.com/baremaps/baremaps/releases/latest/download/baremaps.zip
 
 # use a fixed version so the examples are still working in the future
-wget https://github.com/baremaps/baremaps/releases/download/v0.6.0/baremaps.zip
+wget https://github.com/baremaps/baremaps/releases/download/v0.6.1/baremaps.zip
 unzip baremaps.zip && rm baremaps.zip
 export PATH=$PATH:`pwd`/baremaps/bin
 ```
