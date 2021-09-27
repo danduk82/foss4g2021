@@ -288,11 +288,6 @@
           "minzoom": 8,
           "maxzoom": 20,
           "sql": "SELECT id, tags, geom FROM osm_relations_z$zoom WHERE (tags -> 'natural' = 'water' OR tags -> 'waterway' IN ('riverbank', 'dock'))"
-        },
-        {
-          "minzoom": 8,
-          "maxzoom": 20,
-          "sql": "SELECT ogc_fid, hstore(''), geometry FROM osm_water_polygons"
         }
       ]
     }
