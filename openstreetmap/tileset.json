@@ -11,7 +11,7 @@
     9.636217,
     47.27128
   ],
-  "minzoom": 9.0,
+  "minzoom": 12.0,
   "maxzoom": 14.0,
   "tiles": [
     "http://localhost:9000/tiles/{z}/{x}/{y}.mvt"
