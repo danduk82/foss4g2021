@@ -1,12 +1,33 @@
 {
   "version" : 8,
-  "metadata" : { },
   "sources" : {
     "baremaps" : {
       "type" : "vector",
       "url" : "http://localhost:9000/tiles.json"
     }
   },
-  "layers" : [ ],
-  "reload" : false
+  "layers" : [ {
+    "id" : "ne_10m_land",
+    "type" : "fill",
+    "source" : "baremaps",
+    "source-layer" : "ne_10m_land",
+    "paint" : {
+      "fill-outline-color" : "rgba(0, 0, 0, 1)",
+      "fill-color" : "rgba(247, 245, 245, 1)"
+    }
+  }, {
+    "id" : "ne_50m_land",
+    "type" : "fill",
+    "source" : "baremaps",
+    "source-layer" : "ne_50m_land",
+    "paint" : {
+      "fill-color" : "rgba(226, 200, 200, 1)",
+      "fill-outline-color" : "rgba(2, 1, 1, 1)"
+    }
+  } ],
+  "center" : [ 0, 0 ],
+  "metadata" : {
+    "maputnik:renderer" : "mbgljs"
+  },
+  "zoom" : 4
 }

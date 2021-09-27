@@ -22,38 +22,43 @@ sudo apt-get install gdal-bin
 ```
 
 You can then import the data using the following command. Here, notice the re-projection in web mercator (EPSG:3857).
-The Natural Earth tables should become visible in your postgresql database. 
+The Natural Earth tables should become visible in your postgresql database.
 
 ```bash
-PGCLIENTENCODING=UTF8 ogr2ogr \
+export PGCLIENTENCODING=UTF8
+export PGHOST=localhost
+# export PGHOST=172.17.0.1 # for docker
+ogr2ogr \
     -progress \
     -f Postgresql \
     -s_srs EPSG:4326 \
     -t_srs EPSG:3857 \
     -clipsrc -180.1 -85.0511 180.1 85.0511 \
-    PG:"dbname=baremaps user=baremaps host=localhost password=baremaps port=5432" \
+    PG:"dbname=baremaps user=baremaps host=$PGHOST password=baremaps port=5432" \
     -lco GEOMETRY_NAME=geometry \
     -lco OVERWRITE=YES \
     -lco DIM=2 \
     -nlt GEOMETRY \
     -overwrite \
-    "data/packages/natural_earth_vector.sqlite"
+    "$PWD/data/packages/natural_earth_vector.sqlite"
 ```
 
-To improve performance, a spatial index should be created for each geometry columns. 
+To improve performance, a spatial index should be created for each geometry columns.
 Such queries can be generated from the schema itself with the following query:
 
 ```postgresql
 SELECT concat('CREATE INDEX IF NOT EXISTS ', tablename, '_gix ON ', tablename, ' USING SPGIST(geometry);')
 FROM pg_tables
 WHERE schemaname = 'public' AND tablename LIKE 'ne_%'
-ORDER BY tablename
+ORDER BY tablename;
 ```
 
 These queries have been saved in the `indexes.sql` file. You can execute it with the following command:
 
 ```bash
 psql -h localhost -U baremaps baremaps < indexes.sql
+# or using a service file
+# psql -d "service=baremaps" < indexes.sql
 ```
 
 To preview and edit the map in the browser, run the tile server with the following command:
