@@ -40,3 +40,7 @@ Open the tileset and insert the following section in the `vector_layers` list:
 In maputnik add a layer that uses the `custom` layer from the tileset.
 
 The layer should be of type `circle`.
+
+## Exercice:
+
+Let's try to play with your own data!
